@@ -52,7 +52,11 @@ function makeQArt(value, img_path, filter) {
 		value: value,
 		imagePath: img_path,
 		filter: filter
-	}).make(document.getElementById('qr-result'));
+	})
+	
+		.make((canvas) => {
+			$("#qr-result-img").attr("src", canvas.toDataURL())
+		})
 }
 
 
