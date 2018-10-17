@@ -9,9 +9,9 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 window.onload = () => {
-  onedrive_client_id = 'bebfea7f-4c55-4f5b-b553-42b852baf849';
+  onedrive_client_id = '89c54cde-0402-4c91-9d53-ab0e2fcb88d3';
   onedrive_scope = 'openid https://graph.microsoft.com/Files.ReadWrite.All';
-  onedrive_redirect_url = 'http://localhost:8000/testt';
+  onedrive_redirect_url = 'https://sgtpepperslonelyhearts.club/onedrive';
   onedrive_login_url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${onedrive_client_id}&response_type=token&redirect_uri=${onedrive_redirect_url}&scope=${onedrive_scope}`;
   onedrive_token = '';
   ajax_timeout = 30000;
@@ -293,4 +293,3 @@ function reset() {
 function ifPreview() {
   return document.querySelector('input[name="if-pre"]:checked').value === "pre-true";
 }
-//# sourceMappingURL=onedrive.js.map
