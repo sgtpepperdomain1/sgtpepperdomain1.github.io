@@ -238,6 +238,7 @@ function fileCheck(file) {
 }
 
 function file_names(file_name, file_type) {
+  if (file_type === 'gif') return [`${file_name}.${file_type}`, `${file_name}-preiview.jpg`]
   return [`${file_name}.${file_type}`, `${file_name}-preiview.${file_type}`]
 }
 
