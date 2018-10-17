@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
@@ -39,14 +39,14 @@ function _arrayWithHoles(arr) {
 }
 
 window.onload = () => {
-  let onedrive_client_id = '89c54cde-0402-4c91-9d53-ab0e2fcb88d3';
-  let onedrive_scope = 'openid https://graph.microsoft.com/Files.ReadWrite.All';
-  let onedrive_redirect_url = 'https://sgtpepperslonelyhearts.club/onedrive';
-  let onedrive_login_url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${onedrive_client_id}&response_type=token&redirect_uri=${onedrive_redirect_url}&scope=${onedrive_scope}`;
-  let onedrive_token = '';
-  let ajax_timeout = 30000;
-  let mb_4 = 4 * 1000 * 1000;
-  let mb_60 = 60 * 1000 * 1000;
+  onedrive_client_id = '89c54cde-0402-4c91-9d53-ab0e2fcb88d3';
+  onedrive_scope = 'openid https://graph.microsoft.com/Files.ReadWrite.All';
+  onedrive_redirect_url = 'https://sgtpepperslonelyhearts.club/onedrive';
+  onedrive_login_url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${onedrive_client_id}&response_type=token&redirect_uri=${onedrive_redirect_url}&scope=${onedrive_scope}`;
+  onedrive_token = '';
+  ajax_timeout = 30000;
+  mb_4 = 4 * 1000 * 1000;
+  mb_60 = 60 * 1000 * 1000;
   tokenFlow();
   document.getElementById("img-upload").addEventListener("click", () => {
     let img_origin = document.getElementById("afile").files[0];
