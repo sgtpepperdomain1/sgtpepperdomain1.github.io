@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="img/favicon.ico" rel="shortcut icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+  <title>Sgt. Pepper's Lonely Hearts Club Band</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: lightblue;
+    }
+
+    #canvas {
+      background-color: white;
+      width: 100vw;
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<script>
+  window.onload = function () {
+    dvd()
+  }
+
+  function dvd(direction = 'r-b', position_x = 0, position_y = 0, count = 1) {
+    let ctx = document.getElementById('canvas').getContext('2d')
+    let speed_x = 0.5
+    let speed_y = 0.5
+    let rect_width = 125
+    let rect_height = 50
+    let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+    ctx.fillStyle = colors[count % 7]
+    let canvas_width = document.getElementById('canvas').width
+    let canvas_height = document.getElementById('canvas').height
+    switch (direction) {
+      case 'r-b':
+        position_x += speed_x
+        position_y += speed_y
+        break
+      case 'r-t':
+        position_x += speed_x
+        position_y -= speed_y
+        break
+      case 'l-b':
+        position_x -= speed_x
+        position_y += speed_y
+        break
+      case 'l-t':
+        position_x -= speed_x
+        position_y -= speed_y
+        break
+    }
+    ctx.clearRect(0, 0, canvas_width, canvas_height)
+    ctx.fillRect(position_x, position_y, rect_width, rect_height)
+    if (position_y + rect_height >= canvas_height) {
+      direction = direction.replace('b', 't')
+      count += 1
+    }
+    if (position_x + rect_width >= canvas_width) {
+      direction = direction.replace('r', 'l')
+      count += 1
+    }
+    if (position_x < 0) {
+      direction = direction.replace('l', 'r')
+      count += 1
+    }
+    if (position_y < 0) {
+      direction = direction.replace('t', 'b')
+      count += 1
+    }
+    let text_colors = ['green', 'blue', 'purple', 'yellow', 'white', 'yellow', 'white']
+    ctx.fillStyle = text_colors[count % 7]
+    ctx.font = "italic bold 50px yahei"
+    ctx.fillText("DVD", position_x, position_y + rect_height - 5)
+    window.requestAnimationFrame(() => {
+      dvd(direction, position_x, position_y, count)
+    })
+  }
+</script>
+</body>
+</html>
