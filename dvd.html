@@ -28,62 +28,94 @@
 
 <script>
   window.onload = function () {
-    dvd()
-  }
+    const
+      // 画布尺寸
+      canvas_width = document.getElementById('canvas').width,
+      canvas_height = document.getElementById('canvas').height,
+      // DVD 图标的文本颜色、字体、背景色
+      text_color = ['green', 'blue', 'purple', 'yellow', 'white', 'yellow', 'white'],
+      text_font = 'italic bold 43px yahei',
+      background_color = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'],
+      // 背景矩形的尺寸
+      background_width = 110,
+      background_height = 50,
+      // 向矩形添加文本时，高度有点偏差
+      fix_height = 0,
+      // 速度，每次重绘移动 0.5 px
+      speed_x = 0.5,
+      speed_y = 0.5
 
-  function dvd(direction = 'r-b', position_x = 0, position_y = 0, count = 1) {
-    let ctx = document.getElementById('canvas').getContext('2d')
-    let speed_x = 0.5
-    let speed_y = 0.5
-    let rect_width = 110
-    let rect_height = 50
-    let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
-    ctx.fillStyle = colors[count % 7]
-    let canvas_width = document.getElementById('canvas').width
-    let canvas_height = document.getElementById('canvas').height
-    switch (direction) {
-      case 'r-b':
-        position_x += speed_x
-        position_y += speed_y
-        break
-      case 'r-t':
-        position_x += speed_x
-        position_y -= speed_y
-        break
-      case 'l-b':
-        position_x -= speed_x
-        position_y += speed_y
-        break
-      case 'l-t':
-        position_x -= speed_x
-        position_y -= speed_y
-        break
+    dvd()
+
+    /**
+     *
+     * @param direction 移动方向，初始为 'r-b' 右下
+     * @param position_x 图标 x 坐标，初始为 0
+     * @param position_y 图标 y 坐标，初始为 0
+     * @param count 碰撞次数，用来计算背景和文本颜色
+     */
+    function dvd(direction = 'r-b', position_x = 0, position_y = 0, count = 1) {
+      let ctx = document.getElementById('canvas').getContext('2d')
+      // 背景色，碰撞时改变
+      ctx.fillStyle = background_color[count % 7]
+      // 移动方向
+      switch (direction) {
+        // 右下
+        case 'r-b':
+          position_x += speed_x
+          position_y += speed_y
+          break
+        // 右上
+        case 'r-t':
+          position_x += speed_x
+          position_y -= speed_y
+          break
+        // 左下
+        case 'l-b':
+          position_x -= speed_x
+          position_y += speed_y
+          break
+        // 左上
+        case 'l-t':
+          position_x -= speed_x
+          position_y -= speed_y
+          break
+      }
+      // 清空画布
+      ctx.clearRect(0, 0, canvas_width, canvas_height)
+      // 重绘
+      ctx.fillRect(position_x, position_y, background_width, background_height)
+      // 碰撞检测
+      // 底
+      if (position_y + background_height >= canvas_height) {
+        direction = direction.replace('b', 't')
+        // 碰撞次数统计
+        count += 1
+      }
+      // 右
+      if (position_x + background_width >= canvas_width) {
+        direction = direction.replace('r', 'l')
+        count += 1
+      }
+      // 左
+      if (position_x < 0) {
+        direction = direction.replace('l', 'r')
+        count += 1
+      }
+      // 上
+      if (position_y < 0) {
+        direction = direction.replace('t', 'b')
+        count += 1
+      }
+      // 文本
+      ctx.font = text_font
+      ctx.fillStyle = text_color[count % 7]
+      ctx.fillText("DVD", position_x, position_y + background_height - fix_height)
+      // 开始动画
+      window.requestAnimationFrame(() => {
+        dvd(direction, position_x, position_y, count)
+      })
     }
-    ctx.clearRect(0, 0, canvas_width, canvas_height)
-    ctx.fillRect(position_x, position_y, rect_width, rect_height)
-    if (position_y + rect_height >= canvas_height) {
-      direction = direction.replace('b', 't')
-      count += 1
-    }
-    if (position_x + rect_width >= canvas_width) {
-      direction = direction.replace('r', 'l')
-      count += 1
-    }
-    if (position_x < 0) {
-      direction = direction.replace('l', 'r')
-      count += 1
-    }
-    if (position_y < 0) {
-      direction = direction.replace('t', 'b')
-      count += 1
-    }
-    let text_colors = ['green', 'blue', 'purple', 'yellow', 'white', 'yellow', 'white']
-    ctx.fillStyle = text_colors[count % 7]
-    ctx.font = "italic bold 50px yahei"
-    ctx.fillText("DVD", position_x, position_y + rect_height - 7)
-    window.requestAnimationFrame(() => {
-      dvd(direction, position_x, position_y, count)
-    })
   }
 </script>
 </body>
